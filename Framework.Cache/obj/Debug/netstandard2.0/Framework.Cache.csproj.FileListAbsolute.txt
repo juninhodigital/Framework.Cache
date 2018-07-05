@@ -33,3 +33,12 @@ C:\Users\jjunior\Desktop\Framework\Services\Cache\Framework.Cache\obj\Debug\nets
 C:\Users\jjunior\Desktop\Framework\Services\Cache\Framework.Cache\obj\Debug\netstandard2.0\Framework.Cache.AssemblyInfo.cs
 C:\Users\jjunior\Desktop\Framework\Services\Cache\Framework.Cache\obj\Debug\netstandard2.0\Framework.Cache.dll
 C:\Users\jjunior\Desktop\Framework\Services\Cache\Framework.Cache\obj\Debug\netstandard2.0\Framework.Cache.pdb
+C:\Users\jjunior\Desktop\Framework\Services\Framework.Cache\Framework.Cache\bin\Debug\netstandard2.0\Framework.Cache.deps.json
+C:\Users\jjunior\Desktop\Framework\Services\Framework.Cache\Framework.Cache\bin\Debug\netstandard2.0\Framework.Cache.dll
+C:\Users\jjunior\Desktop\Framework\Services\Framework.Cache\Framework.Cache\bin\Debug\netstandard2.0\Framework.Cache.pdb
+C:\Users\jjunior\Desktop\Framework\Services\Framework.Cache\Framework.Cache\obj\Debug\netstandard2.0\Framework.Cache.csprojAssemblyReference.cache
+C:\Users\jjunior\Desktop\Framework\Services\Framework.Cache\Framework.Cache\obj\Debug\netstandard2.0\Framework.Cache.csproj.CoreCompileInputs.cache
+C:\Users\jjunior\Desktop\Framework\Services\Framework.Cache\Framework.Cache\obj\Debug\netstandard2.0\Framework.Cache.AssemblyInfoInputs.cache
+C:\Users\jjunior\Desktop\Framework\Services\Framework.Cache\Framework.Cache\obj\Debug\netstandard2.0\Framework.Cache.AssemblyInfo.cs
+C:\Users\jjunior\Desktop\Framework\Services\Framework.Cache\Framework.Cache\obj\Debug\netstandard2.0\Framework.Cache.dll
+C:\Users\jjunior\Desktop\Framework\Services\Framework.Cache\Framework.Cache\obj\Debug\netstandard2.0\Framework.Cache.pdb

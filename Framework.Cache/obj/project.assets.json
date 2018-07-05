@@ -226,11 +226,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jjunior\\Desktop\\Framework\\Services\\Cache\\Framework.Cache\\Framework.Cache.csproj",
+      "projectUniqueName": "C:\\Users\\jjunior\\Desktop\\Framework\\Services\\Framework.Cache\\Framework.Cache\\Framework.Cache.csproj",
       "projectName": "Framework.Cache",
-      "projectPath": "C:\\Users\\jjunior\\Desktop\\Framework\\Services\\Cache\\Framework.Cache\\Framework.Cache.csproj",
+      "projectPath": "C:\\Users\\jjunior\\Desktop\\Framework\\Services\\Framework.Cache\\Framework.Cache\\Framework.Cache.csproj",
       "packagesPath": "C:\\Users\\jjunior\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jjunior\\Desktop\\Framework\\Services\\Cache\\Framework.Cache\\obj\\",
+      "outputPath": "C:\\Users\\jjunior\\Desktop\\Framework\\Services\\Framework.Cache\\Framework.Cache\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
