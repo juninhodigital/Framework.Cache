@@ -2,7 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>Framework.Cache</Description>
+    <Description>It provides the base methods and properties for accessing the object cache using Runtime caching capabilities</Description>
+    <Version>1.0.2</Version>
+    <Authors>Jose Carlos de Jesus Junior</Authors>
+    <PackageId>Framework.Services.Cache</PackageId>
+    <Copyright>Copyright 2018</Copyright>
+    <PackageLicenseUrl>https://github.com/juninhodigital/Framework.Cache/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://github.com/juninhodigital/Framework.Core/blob/master/Icons/FS_IconSmall.png?raw=true</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/juninhodigital/Framework.Cache</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/juninhodigital/Framework.Cache</RepositoryUrl>
+    <PackageTags>Cache, Cache Library, Cache Helper, Runtime Cache</PackageTags>
+    <NeutralLanguage>English (United States)</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

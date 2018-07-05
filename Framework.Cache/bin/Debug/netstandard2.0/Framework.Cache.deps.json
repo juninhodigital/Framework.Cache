@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Framework.Cache/1.0.0": {
+      "Framework.Cache/1.0.2": {
         "dependencies": {
           "NETStandard.Library": "2.0.1",
           "System.Runtime.Caching": "4.5.0"
@@ -30,7 +30,7 @@
     }
   },
   "libraries": {
-    "Framework.Cache/1.0.0": {
+    "Framework.Cache/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

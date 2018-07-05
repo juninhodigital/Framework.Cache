@@ -4,7 +4,7 @@ using System.Runtime.Caching;
 namespace Framework.Cache
 {
     /// <summary>
-    ///  Represents an object cache and provides the base methods and properties for accessing the object cache.
+    /// It provides the base methods and properties for accessing the object cache using Runtime caching capabilities
     /// </summary>
     public static class Cache
     {
