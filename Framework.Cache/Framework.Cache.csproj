@@ -13,6 +13,12 @@
     <RepositoryUrl>https://github.com/juninhodigital/Framework.Cache</RepositoryUrl>
     <PackageTags>Cache, Cache Library, Cache Helper, Runtime Cache</PackageTags>
     <NeutralLanguage>English (United States)</NeutralLanguage>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryType>Github</RepositoryType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
