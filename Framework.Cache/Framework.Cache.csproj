@@ -18,10 +18,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Framework.Services.Core" Version="1.0.7" />
+    <PackageReference Include="StackExchange.Redis" Version="2.2.50" />
     <PackageReference Include="System.Runtime.Caching" Version="4.5.0" />
   </ItemGroup>
 
