@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>It provides the base methods and properties for accessing the object cache using Runtime caching capabilities</Description>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>Jose Carlos de Jesus Junior</Authors>
     <PackageId>Framework.Services.Cache</PackageId>
     <Copyright>Copyright 2018</Copyright>
@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
