@@ -87,7 +87,7 @@ namespace Framework.Cache
         }
 
         /// <summary>
-        ///  Set key to hold the string value in the REDIS CACHE. If key already holds a value, it is overwritten,regardless of its type.
+        ///  Add an string entry in the REDIS CACHE based on a given key. If key already holds a value, it is overwritten,regardless of its type.
         /// </summary>
         /// <param name="key">key</param>
         /// <param name="value">value</param>
@@ -97,6 +97,20 @@ namespace Framework.Cache
             key.Validate();
 
             await RedisEngine.AddAsync(key, value, expirationTimeout);
+        }
+
+
+        /// <summary>
+        ///  Add an object entry serialized in JSON format in the REDIS CACHE based on a given ke. If key already holds a value, it is overwritten,regardless of its type.
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <param name="value">value</param>
+        /// <param name="expirationTimeout">Timeout in minute to the cache to expire</param>
+        public static async Task AddAsync<T>(string key, T value, TimeSpan? expirationTimeout = null) where T : class
+        {
+            key.Validate();
+
+            await RedisEngine.AddAsync(key, value.ToJSON(), expirationTimeout);
         }
 
         /// <summary>
@@ -139,12 +153,23 @@ namespace Framework.Cache
         ///  Removes the specified key from the REDIS CACHE. A key is ignored if it does not exist.
         /// </summary>
         /// <param name="key">key</param>
+        /// <param name="cacheType">CacheType</param>
         /// <returns>True if the key was removed.</returns>
-        public static async Task<bool> RemoveAsync(string key)
+        public static async Task<bool> RemoveAsync(string key, CacheType cacheType = CacheType.Runtime)
         {
             key.Validate();
 
-            return await RedisEngine.RemoveAsync(key);
+            if(cacheType == CacheType.Redis)
+            {
+                return await RedisEngine.RemoveAsync(key);
+            }
+            else
+            {
+                // Runtime memory cache does not provide an async method
+                await Task.Delay(0);
+
+                return runtime.Remove(key);
+            }
         }
 
         /// <summary>
@@ -174,12 +199,23 @@ namespace Framework.Cache
         /// Returns if key exists.
         /// </summary>
         /// <param name="key">key</param>
+        /// <param name="cacheType">CacheType</param>
         /// <returns>1 if the key exists. 0 if the key does not exist</returns>
-        public static async Task<bool> ExistsAsync(string key)
+        public static async Task<bool> ExistsAsync(string key, CacheType cacheType = CacheType.Runtime)
         {
             key.Validate();
 
-            return await RedisEngine.ExistsAsync(key);
+            if (cacheType == CacheType.Redis)
+            {
+                return await RedisEngine.ExistsAsync(key);
+            }
+            else
+            {
+                // Runtime memory cache does not provide an async method
+                await Task.Delay(0);
+
+                return runtime.Exists(key);
+            }
         }
 
         /// <summary>
@@ -221,12 +257,23 @@ namespace Framework.Cache
         ///  Get the value of key from the REDIS CACHE. If the key does not exist the special value nil is returned.An error is returned if the value stored at key is not a string, because GET only handles string values.
         /// </summary>
         /// <param name="key">key</param>
+        /// <param name="cacheType">CacheType</param>
         /// <returns> the value of key, or null when key does not exist.
-        public static async Task<string> GetAsync(string key)
+        public static async Task<string> GetAsync(string key, CacheType cacheType = CacheType.Runtime)
         {
             key.Validate();
 
-            return await RedisEngine.GetAsync(key);
+            if (cacheType == CacheType.Redis)
+            {
+                return await RedisEngine.GetAsync(key);
+            }
+            else
+            {
+                // Runtime memory cache does not provide an async method
+                await Task.Delay(0);
+
+                return runtime.Get<string>(key);
+            }
         }
 
         /// <summary>
