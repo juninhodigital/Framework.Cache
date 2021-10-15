@@ -291,6 +291,31 @@ namespace Framework.Cache
         }
 
         /// <summary>
+        ///  Get the value of key from the REDIS CACHE. If the key does not exist the special value nil is returned.An error is returned if the value stored at key is not a string, because GET only handles string values.
+        /// </summary>
+        /// <typeparam name="T">param type</typeparam>
+        /// <param name="key">key</param>
+        /// <param name="cacheType">CacheType</param>
+        /// <returns> the value of key, or null when key does not exist.
+        public static async Task<T> GetAsync<T>(string key, CacheType cacheType = CacheType.Runtime) where T:class
+        {
+            key.Validate();
+
+            if (cacheType == CacheType.Redis)
+            {
+                return await RedisEngine.GetAsync<T>(key);
+            }
+            else
+            {
+                // Runtime memory cache does not provide an async method
+                return await Task.Run(() =>
+                {
+                    return runtime.Get<T>(key);
+                });
+            }
+        }
+
+        /// <summary>
         /// Clear all cache entries from the System.Runtime.Caching.ObjectCache
         /// </summary>
         /// <param name="cacheType">CacheType</param>

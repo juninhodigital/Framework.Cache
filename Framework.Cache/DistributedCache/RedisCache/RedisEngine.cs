@@ -107,6 +107,21 @@ namespace Framework.Cache
         }
 
         /// <summary>
+        ///  Get the value of key. If the key does not exist the special value nil is returned.
+        //   An error is returned if the value stored at key is not a string, because GET
+        //   only handles string values.
+        /// </summary>
+        /// <typeparam name="T">param type</typeparam>
+        /// <param name="key">key</param>
+        /// <returns> the value of key, or null when key does not exist.
+        public static async Task<T> GetAsync<T>(string key) where T:class
+        {
+            var content = await GetAsync(key);
+
+            return content.FromJSON<T>();
+        }
+
+        /// <summary>
         ///   Get the value of key. If the key does not exist the special value nil is returned.
         //     An error is returned if the value stored at key is not a string, because GET
         //     only handles string values.
