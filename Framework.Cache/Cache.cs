@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 
@@ -106,11 +105,23 @@ namespace Framework.Cache
         /// <param name="key">key</param>
         /// <param name="value">value</param>
         /// <param name="expirationTimeout">Timeout in minute to the cache to expire</param>
-        public static async Task AddAsync<T>(string key, T value, TimeSpan? expirationTimeout = null) where T : class
+        public static async Task AddAsync<T>(string key, T value, CacheType cacheType, TimeSpan? expirationTimeout = null) where T : class
         {
             key.Validate();
 
-            await RedisEngine.AddAsync(key, value.ToJSON(), expirationTimeout);
+
+            if (cacheType == CacheType.Redis)
+            {
+                await RedisEngine.AddAsync(key, value.ToJSON(), expirationTimeout);
+            }
+            else
+            {
+                // Runtime memory cache does not provide an async method
+                await Task.Run(() =>
+                {
+                    runtime.Add(key, value);
+                });
+            }
         }
 
         /// <summary>
@@ -166,9 +177,10 @@ namespace Framework.Cache
             else
             {
                 // Runtime memory cache does not provide an async method
-                await Task.Delay(0);
-
-                return runtime.Remove(key);
+                return await Task.Run(()=>
+                {
+                    return runtime.Remove(key);
+                });
             }
         }
 
@@ -212,9 +224,10 @@ namespace Framework.Cache
             else
             {
                 // Runtime memory cache does not provide an async method
-                await Task.Delay(0);
-
-                return runtime.Exists(key);
+                return await Task.Run(() =>
+                {
+                    return runtime.Exists(key);
+                });
             }
         }
 
@@ -270,9 +283,10 @@ namespace Framework.Cache
             else
             {
                 // Runtime memory cache does not provide an async method
-                await Task.Delay(0);
-
-                return runtime.Get<string>(key);
+                return await Task.Run(() =>
+                {
+                    return runtime.Get<string>(key);
+                });
             }
         }
 
