@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>It provides the base methods and properties for accessing the object cache using Runtime caching capabilities</Description>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <Authors>Jose Carlos de Jesus Junior</Authors>
     <PackageId>Framework.Services.Cache</PackageId>
     <Copyright>Copyright 2018</Copyright>
@@ -23,8 +23,8 @@
 
   <ItemGroup>
     <PackageReference Include="Framework.Services.Core" Version="1.0.7" />
-    <PackageReference Include="StackExchange.Redis" Version="2.2.50" />
-    <PackageReference Include="System.Runtime.Caching" Version="4.5.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.2.79" />
+    <PackageReference Include="System.Runtime.Caching" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
