@@ -9,7 +9,7 @@
     <Company>Jose Carlos de Jesus Junior</Company>
     <Description>It provides the base methods and properties for accessing the object cache using Runtime caching capabilities</Description>
     <Copyright>Copyright 2022</Copyright>
-    <Version>1.0.9</Version>
+    <Version>1.0.10</Version>
     <PackageId>Framework.Services.Cache</PackageId>
     <PackageProjectUrl>https://github.com/juninhodigital/Framework.Cache</PackageProjectUrl>
     <PackageIconUrl>https://github.com/juninhodigital/Framework.Core/blob/master/Icons/FS_IconSmall.png?raw=true</PackageIconUrl>
