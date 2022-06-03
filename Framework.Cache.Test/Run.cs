@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+
 using Xunit;
 using Xunit.Abstractions;
 
@@ -22,10 +25,7 @@ namespace Framework.Cache.Test
 
         #endregion
 
-        private void SetConnection()
-        {
-            Cache.SetConnection("YOUR_REDIS_URL.redis.cache.windows.net:6380,password=ABCDEFG,ssl=True,abortConnect=False");
-        }
+        #region| Methods |
 
         [Fact]
         public void TestRuntimeCache()
@@ -65,22 +65,22 @@ namespace Framework.Cache.Test
 
             SetConnection();
 
-            if (Cache.Exists("item", CacheType.Redis) == false)
+            if (Cache.Exists("item") == false)
             {
-                Cache.Add("item", "cachedItem", CacheType.Redis);
+                Cache.Add("item", "cachedItem");
             }
 
-            if (Cache.Exists("item", CacheType.Redis))
+            if (Cache.Exists("item"))
             {
-                var cached = Cache.Get("item", CacheType.Redis);
+                var cached = Cache.Get("item");
 
                 if (cached.IsNotNull())
                 {
                     Assert.Equal("cachedItem", cached);
 
-                    if (Cache.Remove("item", CacheType.Redis))
+                    if (Cache.Remove("item"))
                     {
-                        if (Cache.Exists("item", CacheType.Redis) == false)
+                        if (Cache.Exists("item") == false)
                         {
                             output.WriteLine("The entry was removed from the runtime cache");
                         }
@@ -98,15 +98,23 @@ namespace Framework.Cache.Test
 
             SetConnection();
 
-            if (Cache.Exists("item", CacheType.Redis) == false)
+            if (Cache.Exists("item") == false)
             {
-                Cache.Add("item", "cachedItem", CacheType.Redis);
+                Cache.Add("item", "cachedItem");
             }
 
-            Cache.Clear(CacheType.Redis);            
+            Cache.Clear();
 
             output.WriteLine("The method finished");
         }
+
+        private void SetConnection()
+        {
+            // The connection string below is from a redis emulator running on my own machine
+            Cache.SetConnection("localhost:6379,abortConnect=False,keepAlive=180,connectTimeout=1000000,allowAdmin=true");
+        } 
+
+        #endregion
 
     }
 }

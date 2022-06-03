@@ -46,8 +46,6 @@ namespace Framework.Cache
         /// <param name="connectionString">Redis ConnectionString</param>
         public static void SetConnection(string connectionString)
         {
-            connectionString.ThrowIfNull("The redis connection is null or empty");
-
             RedisConnection = connectionString;
 
             lazyConnection = new Lazy<ConnectionMultiplexer>(() =>
@@ -55,6 +53,12 @@ namespace Framework.Cache
                 return ConnectionMultiplexer.Connect(RedisConnection);
             });
         }
+
+        /// <summary>
+        /// Check whether the redis connection string has been initialized
+        /// </summary>
+        /// <returns>true if the connection string is properly set up</returns>
+        public static bool HasConnectionString() => RedisConnection.IsNotNull();
 
         /// <summary>
         ///  Obtain an interactive connection to a database inside redis
@@ -89,7 +93,7 @@ namespace Framework.Cache
         /// <param name="key">key</param>
         /// <param name="value">value</param>
         /// <param name="expirationTimeout">Timeout in minute to the cache to expire</param>
-        public static void Add(string key, string value, TimeSpan? expirationTimeout = null)
+        public static void Add(string key, string? value, TimeSpan? expirationTimeout = null)
         {
             DB.StringSet(key, value, expirationTimeout);
         }

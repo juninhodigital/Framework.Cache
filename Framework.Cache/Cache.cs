@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.Caching;
 
+using Framework.Core;
+
 namespace Framework.Cache
 {
     /// <summary>
@@ -39,13 +41,20 @@ namespace Framework.Cache
         /// </summary>
         /// <param name="key">A unique identifier for the cache entry.</param>
         /// <param name="value">The object to insert</param>
-        /// <param name="cacheType">CacheType (Default: Redis)</param>
         /// <param name="minutes">AbsoluteExpiration in minutes. Default one minute</param>
-        public static void Add<T>(string key, T value, CacheType cacheType = CacheType.Redis, double minutes = 1) where T: class
+        public static void Add<T>(string key, T value, double minutes = 1) where T: class
         {
             key.Validate();
 
-            AddString(key, value.ToJSON(), cacheType, minutes);
+            if(value.IsSimpleType())
+            {
+                AddString(key, value.ToString(), minutes);
+            }
+            else
+            {
+                AddString(key, value.ToJSON(), minutes);
+            }
+            
         }
 
         /// <summary>
@@ -53,24 +62,23 @@ namespace Framework.Cache
         /// </summary>
         /// <param name="key">A unique identifier for the cache entry.</param>
         /// <param name="value">The object to insert</param>
-        /// <param name="cacheType">CacheType (Default: Redis)</param>
         /// <param name="minutes">AbsoluteExpiration in minutes. Default one minute</param>
-        private static void AddString(string key, string value, CacheType cacheType = CacheType.Redis, double minutes = 1)
+        private static void AddString(string key, string? value, double minutes = 1)
         {
             key.Validate();
 
-            if (cacheType == CacheType.Runtime)
+            if (RedisEngine.HasConnectionString())
+            {
+                var expiration = TimeSpan.FromMinutes(minutes);
+
+                RedisEngine.Add(key, value, expiration);
+            }
+            else
             {
                 lock (runtime)
                 {
                     runtime.Add(key, value, minutes);
                 }
-            }
-            else
-            {
-                var expiration = System.TimeSpan.FromMinutes(minutes);
-
-                RedisEngine.Add(key, value, expiration);
             }
         }
 
@@ -79,14 +87,12 @@ namespace Framework.Cache
         /// </summary>
         /// <param name="key">key</param>
         /// <param name="value">value</param>
-        /// <param name="cacheType">CacheType (Default: Redis)</param>
         /// <param name="expirationTimeout">Timeout in minute to the cache to expire</param>
-        public static async Task AddAsync<T>(string key, T value, CacheType cacheType = CacheType.Redis,  TimeSpan? expirationTimeout = null) where T : class
+        public static async Task AddAsync<T>(string key, T value, TimeSpan? expirationTimeout = null) where T : class
         {
             key.Validate();
 
-
-            if (cacheType == CacheType.Redis)
+            if (RedisEngine.HasConnectionString())
             {
                 await RedisEngine.AddAsync(key, value.ToJSON(), expirationTimeout);
             }
@@ -138,21 +144,20 @@ namespace Framework.Cache
         /// removes the cache entry from the cache
         /// </summary>
         /// <param name="key">A unique identifier for the cache entry</param>
-        /// <param name="cacheType">CacheType</param>
-        public static bool Remove(string key, CacheType cacheType = CacheType.Redis)
+        public static bool Remove(string key)
         {
             key.Validate();
 
-            if (cacheType == CacheType.Runtime)
+            if (RedisEngine.HasConnectionString())
+            {
+                return RedisEngine.Remove(key);
+            }
+            else
             {
                 lock (runtime)
                 {
                     return runtime.Remove(key);
                 }
-            }
-            else
-            {
-                return RedisEngine.Remove(key);
             }
         }
 
@@ -160,13 +165,12 @@ namespace Framework.Cache
         ///  Removes the specified key from the REDIS CACHE. A key is ignored if it does not exist.
         /// </summary>
         /// <param name="key">key</param>
-        /// <param name="cacheType">CacheType</param>
         /// <returns>True if the key was removed.</returns>
-        public static async Task<bool> RemoveAsync(string key, CacheType cacheType = CacheType.Redis)
+        public static async Task<bool> RemoveAsync(string key)
         {
             key.Validate();
 
-            if(cacheType == CacheType.Redis)
+            if (RedisEngine.HasConnectionString())
             {
                 return await RedisEngine.RemoveAsync(key);
             }
@@ -184,22 +188,21 @@ namespace Framework.Cache
         /// Checks whether the cache entry already exists in the cache.
         /// </summary>
         /// <param name="key">A unique identifier for the cache entry</param>
-        /// <param name="cacheType">CacheType</param>
         /// <returns>true if the cache contains a cache entry with the same key value as key; otherwise, false.</returns>
-        public static bool Exists(string key, CacheType cacheType = CacheType.Redis)
+        public static bool Exists(string key)
         {
             key.Validate();
 
-            if (cacheType == CacheType.Runtime)
+            if (RedisEngine.HasConnectionString())
+            {
+                return RedisEngine.Exists(key);
+            }
+            else
             {
                 lock (runtime)
                 {
                     return runtime.Exists(key);
                 }
-            }
-            else
-            {
-                return RedisEngine.Exists(key);
             }
         }
 
@@ -207,13 +210,12 @@ namespace Framework.Cache
         /// Returns if key exists.
         /// </summary>
         /// <param name="key">key</param>
-        /// <param name="cacheType">CacheType</param>
         /// <returns>1 if the key exists. 0 if the key does not exist</returns>
-        public static async Task<bool> ExistsAsync(string key, CacheType cacheType = CacheType.Redis)
+        public static async Task<bool> ExistsAsync(string key)
         {
             key.Validate();
 
-            if (cacheType == CacheType.Redis)
+            if (RedisEngine.HasConnectionString())
             {
                 return await RedisEngine.ExistsAsync(key);
             }
@@ -231,22 +233,21 @@ namespace Framework.Cache
         /// Gets an entry from the cache
         /// </summary>
         /// <param name="key">A unique identifier for the cache entry</param>
-        /// <param name="cacheType">CacheType</param>
         /// <returns>cached item</returns>
-        public static string Get(string key, CacheType cacheType = CacheType.Redis)
+        public static string Get(string key)
         {
             key.Validate();
 
-            if (cacheType == CacheType.Runtime)
+            if (RedisEngine.HasConnectionString())
+            {
+                return RedisEngine.Get(key);
+            }
+            else
             {
                 lock (runtime)
                 {
                     return runtime.Get<string>(key);
                 }
-            }
-            else
-            {
-                return RedisEngine.Get(key);
             }
         }
 
@@ -255,24 +256,22 @@ namespace Framework.Cache
         /// </summary>
         /// <typeparam name="T">param type</typeparam>
         /// <param name="key">A unique identifier for the cache entry</param>
-        /// <param name="cacheType">CacheType</param>
         /// <returns>cached item</returns>
-        public static T Get<T>(string key, CacheType cacheType = CacheType.Redis) where T:class
+        public static T Get<T>(string key) where T:class
         {
-            return Get(key, cacheType).FromJSON<T>();
+            return Get(key).FromJSON<T>();
         }
 
         /// <summary>
         ///  Get the value of key from the REDIS CACHE. If the key does not exist the special value nil is returned.An error is returned if the value stored at key is not a string, because GET only handles string values.
         /// </summary>
         /// <param name="key">key</param>
-        /// <param name="cacheType">CacheType</param>
         /// <returns> the value of key, or null when key does not exist.
-        public static async Task<string> GetAsync(string key, CacheType cacheType = CacheType.Redis)
+        public static async Task<string> GetAsync(string key)
         {
             key.Validate();
 
-            if (cacheType == CacheType.Redis)
+            if (RedisEngine.HasConnectionString())
             {
                 return await RedisEngine.GetAsync(key);
             }
@@ -291,13 +290,12 @@ namespace Framework.Cache
         /// </summary>
         /// <typeparam name="T">param type</typeparam>
         /// <param name="key">key</param>
-        /// <param name="cacheType">CacheType</param>
         /// <returns> the value of key, or null when key does not exist.
-        public static async Task<T> GetAsync<T>(string key, CacheType cacheType = CacheType.Redis) where T:class
+        public static async Task<T> GetAsync<T>(string key) where T:class
         {
             key.Validate();
 
-            if (cacheType == CacheType.Redis)
+            if (RedisEngine.HasConnectionString())
             {
                 return await RedisEngine.GetAsync<T>(key);
             }
@@ -314,19 +312,18 @@ namespace Framework.Cache
         /// <summary>
         /// Clear all cache entries from the System.Runtime.Caching.ObjectCache
         /// </summary>
-        /// <param name="cacheType">CacheType</param>
-        public static void Clear(CacheType cacheType = CacheType.Redis)
+        public static void Clear()
         {
-            if (cacheType == CacheType.Runtime)
+            if (RedisEngine.HasConnectionString())
+            {
+                RedisEngine.Clear();
+            }
+            else
             {
                 lock (runtime)
                 {
                     runtime.Clear();
                 }
-            }
-            else
-            {
-                RedisEngine.Clear();
             }
         }
 

@@ -38,7 +38,7 @@ namespace Framework.Cache
         /// <param name="key">A unique identifier for the cache entry.</param>
         /// <param name="value">The object to insert</param>
         /// <param name="minutes">AbsoluteExpiration in minutes. Default one minute</param>
-        public void Add(string key, object value, double minutes=1)
+        public void Add(string key, object? value, double minutes=1)
         {
             var policy = new CacheItemPolicy
             {
@@ -57,7 +57,7 @@ namespace Framework.Cache
         /// <param name="key">A unique identifier for the cache entry.</param>
         /// <param name="value">The object to insert</param>
         /// <param name="policy">CacheItemPolicy</param>
-        public void Add(string key, object value, CacheItemPolicy policy)
+        public void Add(string key, object? value, CacheItemPolicy policy)
         {
             lock (cache)
             {
