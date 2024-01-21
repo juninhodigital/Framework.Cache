@@ -32,7 +32,7 @@ namespace Framework.Cache
         /// </summary>
         /// <param name="input">JSON content</param>
         /// <returns>param type</returns>
-        internal static T FromJSON<T>(this string value)
+        internal static T? FromJSON<T>(this string value)
         {
             return JsonConvert.DeserializeObject<T>(value);
         }

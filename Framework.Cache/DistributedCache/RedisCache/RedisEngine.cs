@@ -105,7 +105,7 @@ namespace Framework.Cache
         /// </summary>
         /// <param name="key">key</param>
         /// <returns> the value of key, or null when key does not exist.
-        public static async Task<string> GetAsync(string key)
+        public static async Task<string?> GetAsync(string key)
         {
             return await DB.StringGetAsync(key);
         }
@@ -118,11 +118,17 @@ namespace Framework.Cache
         /// <typeparam name="T">param type</typeparam>
         /// <param name="key">key</param>
         /// <returns> the value of key, or null when key does not exist.
-        public static async Task<T> GetAsync<T>(string key) where T:class
+        public static async Task<T?> GetAsync<T>(string key) where T:class
         {
             var content = await GetAsync(key);
 
-            return content.FromJSON<T>();
+            if(content != null) 
+            {
+                return content.FromJSON<T>();
+            }
+
+            return default;
+
         }
 
         /// <summary>
@@ -132,7 +138,7 @@ namespace Framework.Cache
         /// </summary>
         /// <param name="key">key</param>
         /// <returns> the value of key, or null when key does not exist.
-        public static string Get(string key)
+        public static string? Get(string key)
         {
             return DB.StringGet(key);
         }

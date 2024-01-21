@@ -12,7 +12,7 @@ namespace Framework.Cache
     {
         #region| Properties |
 
-        private static readonly RuntimeEngine runtime = null;
+        private static readonly RuntimeEngine runtime;
 
         #endregion
 
@@ -234,7 +234,7 @@ namespace Framework.Cache
         /// </summary>
         /// <param name="key">A unique identifier for the cache entry</param>
         /// <returns>cached item</returns>
-        public static string Get(string key)
+        public static string? Get(string key)
         {
             key.Validate();
 
@@ -257,9 +257,19 @@ namespace Framework.Cache
         /// <typeparam name="T">param type</typeparam>
         /// <param name="key">A unique identifier for the cache entry</param>
         /// <returns>cached item</returns>
-        public static T Get<T>(string key) where T:class
+        public static T? Get<T>(string key) where T:class
         {
-            return Get(key).FromJSON<T>();
+            if (key != null)
+            {
+                var output = Get(key)?.FromJSON<T>();
+
+                if(output!=null)
+                {
+                    return output;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
