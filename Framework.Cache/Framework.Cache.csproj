@@ -1,31 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <Authors>Jose Carlos de Jesus Junior</Authors>
     <Company>Jose Carlos de Jesus Junior</Company>
     <Description>It provides the base methods and properties for accessing the object cache using Runtime caching capabilities</Description>
-    <Copyright>Copyright 2022</Copyright>
-    <Version>1.0.11</Version>
+    <Copyright>Copyright 2024</Copyright>
+    <Version>1.0.12</Version>
     <PackageId>Framework.Services.Cache</PackageId>
     <PackageProjectUrl>https://github.com/juninhodigital/Framework.Cache</PackageProjectUrl>
-    <PackageIconUrl>https://github.com/juninhodigital/Framework.Core/blob/master/Icons/FS_IconSmall.png?raw=true</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageTags>Cache, Cache Library, Cache Helper, Runtime Cache</PackageTags>
     <RepositoryType>Github</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/juninhodigital/Framework.Cache</RepositoryUrl>
     <NeutralLanguage>English (United States)</NeutralLanguage>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Framework.Services.Core" Version="1.0.23" />
+    <PackageReference Include="Framework.Services.Core" Version="1.0.26" />
     <PackageReference Include="StackExchange.Redis" Version="2.5.61" />
     <PackageReference Include="System.Runtime.Caching" Version="6.0.0" />
+    <None Include="icon.png" Pack="true" Visible="false" PackagePath="" />
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   
 </Project>
